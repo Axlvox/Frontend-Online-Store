@@ -16,7 +16,7 @@ function Home() {
   const handleSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const response = await getProductsFromCategoryAndQuery('', searchInput);
-    setListOfProducts(response);
+    setListOfProducts(response.results);
   };
 
   return (
