@@ -1,6 +1,18 @@
-function ProductsList() {
+import { ProductType } from '../types/types';
+import ProductCard from './ProductCards';
+
+type ProductProps = {
+  list: ProductType[];
+};
+
+function ProductsList({ list }: ProductProps) {
   return (
-    <p>oi</p>
+    <div>
+      {list.map((product) => (
+        <ProductCard product={ product } key={ product.id } />
+      ))}
+      {list.length < 1 && <p>Nenhum produto foi encontrado</p>}
+    </div>
   );
 }
 
