@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import CategoryList from '../components/CategoryList';
+import ProductsList from '../components/ProductsList';
 
 function Home() {
   const [listOfProducts] = useState([]);
@@ -17,6 +19,8 @@ function Home() {
           </p>
         )
       }
+      <CategoryList />
+      <ProductsList />
     </>
   );
 }
