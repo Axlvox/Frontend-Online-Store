@@ -1,7 +1,15 @@
-// function ShoppingCart() {
-//   return (
-//     <div>
+import { useState } from 'react';
 
-//     </div>
-//   );
-// }
+function ShoppingCart() {
+  const [cartList] = useState([]);
+  return (
+    <div>
+      {cartList.length < 1 && (
+        <p data-testid="shopping-cart-empty-message">
+          Seu carrinho está vazio
+        </p>)}
+    </div>
+  );
+}
+
+export default ShoppingCart;
