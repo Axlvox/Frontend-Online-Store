@@ -12,7 +12,7 @@ export async function getProductsFromCategoryAndQuery(categoryId: string, query:
   try {
     const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}&q=${query}`);
     const data = await response.json();
-    return data;
+    return data.results;
   } catch (error) {
     throw new Error();
   }
