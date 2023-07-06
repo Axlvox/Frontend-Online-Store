@@ -1,23 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CategoryList from '../components/CategoryList';
 import ProductsList from '../components/ProductsList';
-import { getProductsFromCategoryAndQuery } from '../services/api';
+import { getProductsFromCategoryAndQuery, getProductsByCategory } from '../services/api';
 import { ProductType } from '../types/types';
 
 function Home() {
   const [listOfProducts, setListOfProducts] = useState<ProductType[]>([]);
   const [searchInput, setSearchInput] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
   };
 
+  const handleChangeCategory = (category: string) => {
+    setSelectedCategory(category);
+  };
+
   const handleSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const response = await getProductsFromCategoryAndQuery('', searchInput);
+    const response = await getProductsFromCategoryAndQuery(selectedCategory, searchInput);
     setListOfProducts(response.results);
+    console.log(selectedCategory);
   };
+
+  useEffect(() => {
+    const fetchByCategories = async () => {
+      const response = await getProductsByCategory(selectedCategory);
+      console.log(selectedCategory);
+      setListOfProducts(response.results);
+      console.log(listOfProducts);
+    };
+
+    fetchByCategories();
+  }, [selectedCategory]);
 
   return (
     <>
@@ -46,7 +63,7 @@ function Home() {
         )
       }
 
-      <CategoryList />
+      <CategoryList handleChangeCategory={ handleChangeCategory } />
       <ProductsList list={ listOfProducts } />
     </>
   );

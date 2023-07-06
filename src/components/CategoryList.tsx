@@ -6,8 +6,13 @@ type Categories = {
   name: string;
 };
 
-function CategoryList() {
+type CategoryListProps = {
+  handleChangeCategory: (category: string) => void;
+};
+
+function CategoryList({ handleChangeCategory }: CategoryListProps) {
   const [categories, setCategories] = useState<Categories[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -18,6 +23,11 @@ function CategoryList() {
     fetchCategories();
   }, []);
 
+  const handleSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedCategory(event.target.value);
+    handleChangeCategory(selectedCategory);
+  };
+
   return (
     <aside>
       <h3>Categorias:</h3>
@@ -26,7 +36,16 @@ function CategoryList() {
         categories.map((category) => (
           <label key={ category.id }>
             {category.name}
-            <input data-testid="category" type="radio" name="category-buttons" id="" />
+            <input
+              data-testid="category"
+              type="radio"
+              name="category-buttons"
+              id=""
+              // Não está econtrando todas as categorias
+              value={ category.id }
+              checked={ selectedCategory === category.id }
+              onChange={ handleSelected }
+            />
           </label>
         ))
       )}
