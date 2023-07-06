@@ -8,14 +8,23 @@ import { ProductType } from '../types/types';
 function Home() {
   const [listOfProducts, setListOfProducts] = useState<ProductType[]>([]);
   const [searchInput, setSearchInput] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
   };
 
+  const handleChangeCategory = (listProduct: ProductType[]) => {
+    setListOfProducts(listProduct);
+  };
+
+  const handleCategory = (category: string) => {
+    setSelectedCategory(category);
+  };
+
   const handleSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const response = await getProductsFromCategoryAndQuery('', searchInput);
+    const response = await getProductsFromCategoryAndQuery(selectedCategory, searchInput);
     setListOfProducts(response.results);
   };
 
@@ -46,7 +55,10 @@ function Home() {
         )
       }
 
-      <CategoryList />
+      <CategoryList
+        handleCategory={ handleCategory }
+        handleChangeCategory={ handleChangeCategory }
+      />
       <ProductsList list={ listOfProducts } />
     </>
   );
