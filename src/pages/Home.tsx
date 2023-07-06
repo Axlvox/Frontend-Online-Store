@@ -8,6 +8,7 @@ import { ProductType } from '../types/types';
 function Home() {
   const [listOfProducts, setListOfProducts] = useState<ProductType[]>([]);
   const [searchInput, setSearchInput] = useState('');
+  const [shoppingCart, setShoppingCart] = useState<ProductType[]>([]);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
@@ -47,7 +48,11 @@ function Home() {
       }
 
       <CategoryList />
-      <ProductsList list={ listOfProducts } />
+      <ProductsList
+        setShopingList={ setShoppingCart }
+        shopingList={ shoppingCart }
+        list={ listOfProducts }
+      />
     </>
   );
 }
