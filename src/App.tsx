@@ -1,12 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
 import { ProductType } from './types/types';
 
 function App() {
   const [shoppingCart, setShoppingCart] = useState<ProductType[]>([]);
+  useEffect(() => {
+    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+  }, [shoppingCart]);
+
   return (
     <Routes>
       <Route
