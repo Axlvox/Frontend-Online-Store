@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsByCategory } from '../services/api';
+import { ProductType } from '../types/types';
 
 type Categories = {
   id: string;
@@ -7,10 +8,11 @@ type Categories = {
 };
 
 type CategoryListProps = {
-  handleChangeCategory: (category: string) => void;
+  handleChangeCategory: (listProducts: ProductType[]) => void;
+  handleCategory: (category: string) => void;
 };
 
-function CategoryList({ handleChangeCategory }: CategoryListProps) {
+function CategoryList({ handleChangeCategory, handleCategory }: CategoryListProps) {
   const [categories, setCategories] = useState<Categories[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -23,9 +25,12 @@ function CategoryList({ handleChangeCategory }: CategoryListProps) {
     fetchCategories();
   }, []);
 
-  const handleSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelected = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const data = await getProductsByCategory(event.target.value);
     setSelectedCategory(event.target.value);
-    handleChangeCategory(selectedCategory);
+    handleCategory(event.target.value);
+    console.log(data);
+    handleChangeCategory(data.results);
   };
 
   return (
@@ -40,8 +45,6 @@ function CategoryList({ handleChangeCategory }: CategoryListProps) {
               data-testid="category"
               type="radio"
               name="category-buttons"
-              id=""
-              // Não está econtrando todas as categorias
               value={ category.id }
               checked={ selectedCategory === category.id }
               onChange={ handleSelected }

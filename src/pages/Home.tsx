@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CategoryList from '../components/CategoryList';
 import ProductsList from '../components/ProductsList';
-import { getProductsFromCategoryAndQuery, getProductsByCategory } from '../services/api';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 import { ProductType } from '../types/types';
 
 function Home() {
@@ -14,7 +14,11 @@ function Home() {
     setSearchInput(event.target.value);
   };
 
-  const handleChangeCategory = (category: string) => {
+  const handleChangeCategory = (listProduct: ProductType[]) => {
+    setListOfProducts(listProduct);
+  };
+
+  const handleCategory = (category: string) => {
     setSelectedCategory(category);
   };
 
@@ -22,19 +26,7 @@ function Home() {
     event.preventDefault();
     const response = await getProductsFromCategoryAndQuery(selectedCategory, searchInput);
     setListOfProducts(response.results);
-    console.log(selectedCategory);
   };
-
-  useEffect(() => {
-    const fetchByCategories = async () => {
-      const response = await getProductsByCategory(selectedCategory);
-      console.log(selectedCategory);
-      setListOfProducts(response.results);
-      console.log(listOfProducts);
-    };
-
-    fetchByCategories();
-  }, [selectedCategory]);
 
   return (
     <>
@@ -63,7 +55,10 @@ function Home() {
         )
       }
 
-      <CategoryList handleChangeCategory={ handleChangeCategory } />
+      <CategoryList
+        handleCategory={ handleCategory }
+        handleChangeCategory={ handleChangeCategory }
+      />
       <ProductsList list={ listOfProducts } />
     </>
   );
