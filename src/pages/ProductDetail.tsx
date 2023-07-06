@@ -1,33 +1,25 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ProductDetailProps, ProductType } from '../types/types';
-import { getCategories } from '../services/api';
+import { ProductWithAttributes } from '../types/types';
+import { getProductById } from '../services/api';
 
-type Categories = {
-  id: string;
-  name: string;
-};
+function ProductDetail() {
+  const [product, setProduct] = useState<ProductWithAttributes>();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-type ProductProps = {
-  list: ProductType[];
-};
-
-const navigate = useNavigate();
-const handleClick = () => {
-  navigate('/ProductList');
-};
-
-function ProductDetail({ title, image, price, detailLink }: ProductDetailProps) {
-  const [categories, setCategories] = useState([]);
+  const handleClick = () => {
+    navigate('/');
+  };
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const data = await getCategories();
-      setCategories(data);
+    const fetchProductById = async () => {
+      const data = await getProductById(id ?? '');
+      setProduct(data);
     };
 
-    fetchCategories();
-  }, []);
+    fetchProductById();
+  }, [id]);
 
   return (
     <div data-testid="product">
@@ -37,29 +29,35 @@ function ProductDetail({ title, image, price, detailLink }: ProductDetailProps) 
       >
         Voltar
       </button>
-      {categories.length !== 0 && (
-        categories.map((category) => (
+      {product
+        ? (
           <>
             <h2
               data-testid="product-detail-name"
             >
-              {category.title}
+              {product.title}
             </h2>
             <h2
               data-testid="product-detail-price"
             >
-              {category.price}
+              {product.price}
             </h2>
             <img
               data-testid="product-detail-image"
-              src={ category.image }
-              alt={ category.title } />
+              src={ product.thumbnail }
+              alt={ product.title }
+            />
             <ul>
-              <li>{ category.detailLink }</li>
+              { product.attributes.map((attribute) => (
+                <li key={ attribute.value_id }>
+                  <p>{ attribute.name }</p>
+                  <p>{ attribute.value_name }</p>
+                </li>
+              )) }
             </ul>
           </>
-        ))
-      )}
+        )
+        : (<p>Produto não entrado</p>)}
     </div>
   );
 }

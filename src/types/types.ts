@@ -5,9 +5,16 @@ export type ProductType = {
   price: number;
 };
 
-export type ProductDetailProps = {
+export type ProductWithAttributes = {
+  id: string;
   title: string;
-  image: string;
-  price: string;
-  detailLink: string;
+  thumbnail: string;
+  price: number;
+  attributes: Attributes[];
+};
+
+export type Attributes = {
+  name: string;
+  value_id: string;
+  value_name: string;
 };

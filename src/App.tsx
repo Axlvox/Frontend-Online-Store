@@ -9,15 +9,7 @@ function App() {
     <Routes>
       <Route path="/" element={ <Home /> } />
       <Route path="/shoppingCart" element={ <ShoppingCart /> } />
-      <Route
-        path="/ProductDetail"
-        element={ <ProductDetail
-          title={ ' ' }
-          image={ ' ' }
-          price={ ' ' }
-          detailLink={ ' ' }
-        /> }
-      />
+      <Route path="/productdetail/:id" element={ <ProductDetail /> } />
     </Routes>
   );
 }
