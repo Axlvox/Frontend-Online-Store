@@ -4,3 +4,10 @@ export type ProductType = {
   thumbnail: string;
   price: number;
 };
+
+export type ProductDetailProps = {
+  title: string;
+  image: string;
+  price: string;
+  detailLink: string;
+};
