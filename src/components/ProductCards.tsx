@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ProductType } from '../types/types';
 
 type ProductCardProps = {
@@ -15,20 +16,22 @@ function ProductCard({ product: { id, title, thumbnail, price },
     setShoppingList(list);
   };
   return (
-    <div data-testid="product">
-      <p>{title}</p>
-      <img src={ thumbnail } alt={ id } />
-      <p>{price}</p>
+    <div>
+      <Link data-testid="product-detail-link" to={ `/productdetail/${id}` }>
+        <div data-testid="product">
+          <p>{title}</p>
+          <img src={ thumbnail } alt={ id } />
+          <p>{price}</p>
+        </div>
+      </Link>
       <button
         data-testid="product-add-to-cart"
         onClick={ (e) => handleClick(e) }
       >
         Adicionar ao carrinho
-        {' '}
-
       </button>
-
     </div>
+
   );
 }
 

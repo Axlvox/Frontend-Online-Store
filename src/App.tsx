@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
 import { ProductType } from './types/types';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
   const [shoppingCart, setShoppingCart] = useState<ProductType[]>([]);
@@ -21,11 +22,12 @@ function App() {
         /> }
       />
       <Route
-        path="/shoppingCart"
+        path="/shoppingcart"
         element={ <ShoppingCart
           shoppingList={ shoppingCart }
         /> }
       />
+      <Route path="/productdetail/:id" element={ <ProductDetail /> } />
     </Routes>
   );
 }

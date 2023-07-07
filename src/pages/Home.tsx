@@ -13,14 +13,23 @@ type HomeProps = {
 function Home({ shoppingList, setShoppingList }: HomeProps) {
   const [listOfProducts, setListOfProducts] = useState<ProductType[]>([]);
   const [searchInput, setSearchInput] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
   };
 
+  const handleChangeCategory = (listProduct: ProductType[]) => {
+    setListOfProducts(listProduct);
+  };
+
+  const handleCategory = (category: string) => {
+    setSelectedCategory(category);
+  };
+
   const handleSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const response = await getProductsFromCategoryAndQuery('', searchInput);
+    const response = await getProductsFromCategoryAndQuery(selectedCategory, searchInput);
     setListOfProducts(response.results);
   };
 
@@ -41,7 +50,7 @@ function Home({ shoppingList, setShoppingList }: HomeProps) {
         </button>
       </form>
 
-      <Link to="/shoppingCart" data-testid="shopping-cart-button">Carrinho</Link>
+      <Link to="/shoppingcart" data-testid="shopping-cart-button">Carrinho</Link>
 
       {
         listOfProducts.length === 0 && (
@@ -50,8 +59,10 @@ function Home({ shoppingList, setShoppingList }: HomeProps) {
           </p>
         )
       }
-
-      <CategoryList />
+      <CategoryList
+        handleCategory={ handleCategory }
+        handleChangeCategory={ handleChangeCategory }
+      />
       <ProductsList
         setShoppingList={ setShoppingList }
         shoppingList={ shoppingList }
