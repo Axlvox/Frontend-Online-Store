@@ -3,13 +3,18 @@ import ProductCard from './ProductCards';
 
 type ProductProps = {
   list: ProductType[];
+  shoppingList: ProductType[];
+  setShoppingList: React.Dispatch<React.SetStateAction<ProductType[]>>;
+
 };
 
-function ProductsList({ list }: ProductProps) {
+function ProductsList({ list, shoppingList, setShoppingList }: ProductProps) {
   return (
     <div>
       {list.map((product) => (
         <ProductCard
+          setShoppingList={ setShoppingList }
+          shoppingList={ shoppingList }
           product={ product }
           key={ product.id }
         />

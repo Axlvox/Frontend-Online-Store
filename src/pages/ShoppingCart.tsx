@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { ProductType } from '../types/types';
+import ShoppingCartCard from '../components/ShoppingCartCard';
 
-function ShoppingCart() {
-  const [cartList] = useState([]);
+type ShoppingCartProps = {
+  shoppingList: ProductType[],
+};
+function ShoppingCart({ shoppingList }: ShoppingCartProps) {
   return (
     <div>
-      {cartList.length < 1 && (
+      {shoppingList.length < 1 ? (
         <p data-testid="shopping-cart-empty-message">
           Seu carrinho está vazio
-        </p>)}
+        </p>)
+        : shoppingList.map((product) => (
+          <ShoppingCartCard product={ product } key={ product.id } />
+        ))}
     </div>
   );
 }

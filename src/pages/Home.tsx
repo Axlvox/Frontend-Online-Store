@@ -5,7 +5,12 @@ import ProductsList from '../components/ProductsList';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import { ProductType } from '../types/types';
 
-function Home() {
+type HomeProps = {
+  shoppingList: ProductType[];
+  setShoppingList: React.Dispatch<React.SetStateAction<ProductType[]>>;
+};
+
+function Home({ shoppingList, setShoppingList }: HomeProps) {
   const [listOfProducts, setListOfProducts] = useState<ProductType[]>([]);
   const [searchInput, setSearchInput] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -54,12 +59,15 @@ function Home() {
           </p>
         )
       }
-
       <CategoryList
         handleCategory={ handleCategory }
         handleChangeCategory={ handleChangeCategory }
       />
-      <ProductsList list={ listOfProducts } />
+      <ProductsList
+        setShoppingList={ setShoppingList }
+        shoppingList={ shoppingList }
+        list={ listOfProducts }
+      />
     </>
   );
 }
