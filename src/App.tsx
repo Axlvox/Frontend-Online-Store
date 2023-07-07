@@ -8,7 +8,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={ <Home /> } />
-      <Route path="/shoppingCart" element={ <ShoppingCart /> } />
+      <Route path="/shoppingcart" element={ <ShoppingCart /> } />
       <Route path="/productdetail/:id" element={ <ProductDetail /> } />
     </Routes>
   );

@@ -45,7 +45,7 @@ function Home() {
         </button>
       </form>
 
-      <Link to="/shoppingCart" data-testid="shopping-cart-button">Carrinho</Link>
+      <Link to="/shoppingcart" data-testid="shopping-cart-button">Carrinho</Link>
 
       {
         listOfProducts.length === 0 && (

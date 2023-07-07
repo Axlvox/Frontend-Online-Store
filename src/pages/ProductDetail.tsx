@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ProductWithAttributes } from '../types/types';
 import { getProductById } from '../services/api';
@@ -8,8 +8,8 @@ function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate('/');
+  const handleClickCart = () => {
+    navigate('/shoppingcart');
   };
 
   useEffect(() => {
@@ -23,11 +23,12 @@ function ProductDetail() {
 
   return (
     <div data-testid="product">
+      <Link to="/">Voltar</Link>
       <button
         data-testid="shopping-cart-button"
-        onClick={ handleClick }
+        onClick={ handleClickCart }
       >
-        Voltar
+        Carrinho
       </button>
       {product
         ? (
