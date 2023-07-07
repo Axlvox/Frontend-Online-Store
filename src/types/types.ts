@@ -3,14 +3,7 @@ export type ProductType = {
   title: string;
   thumbnail: string;
   price: number;
-};
-
-export type ProductWithAttributes = {
-  id: string;
-  title: string;
-  thumbnail: string;
-  price: number;
-  attributes: Attributes[];
+  attributes?: Attributes[];
 };
 
 export type Attributes = {
