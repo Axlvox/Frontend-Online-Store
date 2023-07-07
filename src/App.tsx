@@ -7,7 +7,9 @@ import { ProductType } from './types/types';
 import ProductDetail from './pages/ProductDetail';
 
 function App() {
-  const [shoppingCart, setShoppingCart] = useState<ProductType[]>([]);
+  const [shoppingCart, setShoppingCart] = useState<ProductType[]>(
+    localStorage.shoppingCart ? JSON.parse(localStorage.shoppingCart) : [],
+  );
   useEffect(() => {
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
   }, [shoppingCart]);
@@ -25,6 +27,7 @@ function App() {
         path="/shoppingcart"
         element={ <ShoppingCart
           shoppingList={ shoppingCart }
+          setShoppingList={ setShoppingCart }
         /> }
       />
       <Route
