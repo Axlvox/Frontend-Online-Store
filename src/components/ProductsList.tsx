@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { ProductType } from '../types/types';
 import ProductCard from './ProductCards';
 
