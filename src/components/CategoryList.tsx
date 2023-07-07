@@ -1,13 +1,20 @@
 import { useEffect, useState } from 'react';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsByCategory } from '../services/api';
+import { ProductType } from '../types/types';
 
 type Categories = {
   id: string;
   name: string;
 };
 
-function CategoryList() {
+type CategoryListProps = {
+  handleChangeCategory: (listProducts: ProductType[]) => void;
+  handleCategory: (category: string) => void;
+};
+
+function CategoryList({ handleChangeCategory, handleCategory }: CategoryListProps) {
   const [categories, setCategories] = useState<Categories[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -18,6 +25,14 @@ function CategoryList() {
     fetchCategories();
   }, []);
 
+  const handleSelected = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const data = await getProductsByCategory(event.target.value);
+    setSelectedCategory(event.target.value);
+    handleCategory(event.target.value);
+    console.log(data);
+    handleChangeCategory(data.results);
+  };
+
   return (
     <aside>
       <h3>Categorias:</h3>
@@ -26,7 +41,14 @@ function CategoryList() {
         categories.map((category) => (
           <label key={ category.id }>
             {category.name}
-            <input data-testid="category" type="radio" name="category-buttons" id="" />
+            <input
+              data-testid="category"
+              type="radio"
+              name="category-buttons"
+              value={ category.id }
+              checked={ selectedCategory === category.id }
+              onChange={ handleSelected }
+            />
           </label>
         ))
       )}
