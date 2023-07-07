@@ -1,15 +1,29 @@
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ProductWithAttributes } from '../types/types';
+import { ProductType } from '../types/types';
 import { getProductById } from '../services/api';
 
-function ProductDetail() {
-  const [product, setProduct] = useState<ProductWithAttributes>();
+type ProductDetailProps = {
+  setShoppingList: React.Dispatch<React.SetStateAction<ProductType[]>>;
+  shoppingList: ProductType[];
+};
+
+function ProductDetail({ setShoppingList, shoppingList }: ProductDetailProps) {
+  const [product, setProduct] = useState<ProductType>();
   const { id } = useParams();
   const navigate = useNavigate();
 
   const handleClickCart = () => {
     navigate('/shoppingcart');
+  };
+
+  const HandleClick = () => {
+    if (product) {
+      setShoppingList([
+        ...shoppingList,
+        product,
+      ]);
+    }
   };
 
   useEffect(() => {
@@ -48,8 +62,11 @@ function ProductDetail() {
               src={ product.thumbnail }
               alt={ product.title }
             />
+            <button onClick={ HandleClick } data-testid="product-detail-add-to-cart">
+              Adicionar ao Carrinho
+            </button>
             <ul>
-              { product.attributes.map((attribute) => (
+              { product.attributes && product.attributes.map((attribute) => (
                 <li key={ attribute.value_id }>
                   <p>{ attribute.name }</p>
                   <p>{ attribute.value_name }</p>

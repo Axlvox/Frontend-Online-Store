@@ -7,7 +7,7 @@ type ShoppingCartProps = {
 function ShoppingCart({ shoppingList }: ShoppingCartProps) {
   return (
     <div>
-      {shoppingList.length < 1 ? (
+      {shoppingList.length === 0 ? (
         <p data-testid="shopping-cart-empty-message">
           Seu carrinho está vazio
         </p>)
