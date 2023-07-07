@@ -4,14 +4,7 @@ export type ProductType = {
   thumbnail: string;
   price: number;
   quantity?: number;
-};
-
-export type ProductWithAttributes = {
-  id: string;
-  title: string;
-  thumbnail: string;
-  price: number;
-  attributes: Attributes[];
+  attributes?: Attributes[];
 };
 
 export type Attributes = {

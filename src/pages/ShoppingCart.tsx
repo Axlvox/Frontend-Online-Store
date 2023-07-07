@@ -20,7 +20,7 @@ function ShoppingCart({ shoppingList, setShoppingList }: ShoppingCartProps) {
     <div>
       <Link to="/">Voltar</Link>
       <div>
-        {filterShoppingList.length < 1 ? (
+        {filterShoppingList.length === 0 ? (
           <p data-testid="shopping-cart-empty-message">
             Seu carrinho está vazio
           </p>)

@@ -30,7 +30,13 @@ function App() {
           setShoppingList={ setShoppingCart }
         /> }
       />
-      <Route path="/productdetail/:id" element={ <ProductDetail /> } />
+      <Route
+        path="/productdetail/:id"
+        element={ <ProductDetail
+          setShoppingList={ setShoppingCart }
+          shoppingList={ shoppingCart }
+        /> }
+      />
     </Routes>
   );
 }
